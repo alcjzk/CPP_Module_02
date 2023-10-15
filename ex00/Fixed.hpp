@@ -9,7 +9,7 @@ class Fixed {
         ~Fixed();
         
         int     getRawBits() const;
-        void    setRawBits(int raw);
+        void    setRawBits(const int raw);
     private:
         int                 value;
         static const int    fraction_bits;
