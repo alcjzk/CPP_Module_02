@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include "Fixed.hpp"
 
 const int Fixed::_fraction_bits = 8;
@@ -19,7 +20,7 @@ Fixed::Fixed(const int from) : _value(from << _fraction_bits)
 }
 
 Fixed::Fixed(const float from) :
-    _value(from * float(1 << _fraction_bits) + (from >= 0.0f ? 0.5f : -0.5f))
+    _value(roundf(from * float(1 << _fraction_bits)))
 {
     std::cout << "Float constructor called" << std::endl;
 }
