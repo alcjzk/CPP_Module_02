@@ -4,30 +4,18 @@
 
 const int Fixed::_fraction_bits = 8;
 
-Fixed::Fixed() : _value(0)
-{
-    std::cout << "Default constructor called" << std::endl;
-}
+Fixed::Fixed() : _value(0) {}
 
-Fixed::Fixed(const Fixed &fixed) : _value(fixed._value)
-{
-    std::cout << "Copy constructor called" << std::endl;
-}
+Fixed::Fixed(const Fixed &fixed) : _value(fixed._value) {}
 
-Fixed::Fixed(const int from) : _value(from << _fraction_bits)
-{
-    std::cout << "Int constructor called" << std::endl;
-}
+Fixed::Fixed(const int from) : _value(from << _fraction_bits) {}
 
 Fixed::Fixed(const float from) :
     _value(roundf(from * float(1 << _fraction_bits)))
-{
-    std::cout << "Float constructor called" << std::endl;
-}
+{}
 
 Fixed& Fixed::operator=(const Fixed &fixed)
 {
-    std::cout << "Copy assignment operator called" << std::endl;
     if (this == &fixed)
         return *this;
     _value = fixed.getRawBits();
@@ -39,10 +27,7 @@ std::ostream& operator<<(std::ostream& os, const Fixed &fixed)
     return os << fixed.toFloat();
 }
 
-Fixed::~Fixed()
-{
-    std::cout << "Destructor called" << std::endl;
-}
+Fixed::~Fixed() {}
 
 int Fixed::getRawBits() const
 {
@@ -147,14 +132,14 @@ Fixed Fixed::operator++(int)
 {
     Fixed   output(*this);
 
-    return ++output._value, output;
+    return ++_value, output;
 }
 
 Fixed Fixed::operator--(int)
 {
     Fixed   output(*this);
 
-    return --output._value, output;
+    return --_value, output;
 }
 
 const Fixed &Fixed::min(const Fixed &lhs, const Fixed& rhs)
