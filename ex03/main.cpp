@@ -1,21 +1,29 @@
 #include <iostream>
 #include <cstdlib>
+#include <cassert>
 #include "Fixed.hpp"
+#include "Point.hpp"
+
+
+bool bsp(const Point a, const Point b, const Point c, const Point point);
 
 int main()
 {
-    Fixed a;
-    Fixed const b( Fixed( 5.05f ) * Fixed( 2 ) );
+    Point a(1.2f, 1.2f), b(1.3f, 4.5f), c(5.5f, 0.6f);
 
-    std::cout << a << std::endl;
-    
-    std::cout << ++a << std::endl;
-    std::cout << a << std::endl;
-    std::cout << a++ << std::endl;
-    std::cout << a << std::endl;
+    // Point is on vertex
+    assert(!bsp(a, b, c, a));
+    assert(!bsp(a, b, c, b));
+    assert(!bsp(a, b, c, c));
 
-    std::cout << b << std::endl;
-    std::cout << Fixed::max( a, b ) << std::endl;
+    // Point inside triangle
+    assert(bsp(a, b, c, Point(1.4f, 3.3f)));
+
+    // Point outside triangle
+    assert(!bsp(a, b, c, Point(1.0f, 3.3f))); // To the left
+    assert(!bsp(a, b, c, Point(6.0f, 3.3f))); // To the right
+    assert(!bsp(a, b, c, Point(2.0f, 9.0f))); // Above
+    assert(!bsp(a, b, c, Point(2.0f, -9.0f))); // Below
 
     return EXIT_SUCCESS;
 }
