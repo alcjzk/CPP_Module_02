@@ -2,22 +2,15 @@
 
 bool bsp(const Point a, const Point b, const Point c, const Point p)
 {
-    Fixed   w1, w2;
+    Fixed expr1(c.y() - a.y());
+    Fixed expr2(p.y() - a.y());
+    Fixed expr3(c.x() - a.x());
+    Fixed expr4(b.y() - a.y());
+    Fixed w1 = (a.x() * expr1 + expr2 * expr3 - p.x() * expr1)
+        / (expr4 * expr3 - (b.x() - a.x()) * expr1);
+    Fixed w2 = (expr2 - w1 * expr4) / expr1;
 
-    w1 = (a.x() *
-        (c.y() - a.y()) + (p.y() - a.y()) *
-        (c.x() - a.x()) - p.x() *
-        (c.y() - a.y())) /
-        ((b.y() - a.y()) *
-        (c.x() - a.x()) -
-        (b.x() - a.x()) *
-        (c.y() - a.y()));
-    w2 = (p.y() - a.y() - w1 * (b.y() - a.y())) / (c.y() - a.y());
-    if (w1 > Fixed(0) && w1 < Fixed(1) &&
+    return (w1 > Fixed(0) && w1 < Fixed(1) &&
         w2 > Fixed(0) && w2 < Fixed(1) &&
-        w1 + w2 < Fixed(1) && w1 + w2 > Fixed(0))
-    {
-        return true;
-    }
-    return false;
+        w1 + w2 < Fixed(1));
 }
